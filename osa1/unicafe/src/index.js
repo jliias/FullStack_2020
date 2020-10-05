@@ -1,13 +1,41 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Display = (props) => {
+const StatisticLine = (props) => {
+  return (
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr  >
+  );
+}
+
+const Statistics = (props) => {
+  const all = props.good + props.neutral + props.bad
+  const average = (props.good - props.bad) / (props.good + props.neutral + props.bad)
+  const positive = props.good / all * 100 + "%"
+
+  // Statistics is shown only if feedback is given
+  if (all === 0) {
+    return (
+      <div>
+        No feedback given
+      </div>
+    );
+  }
+
   return (
     <div>
-      good {props.good}<br/>
-      neutral {props.neutral}<br/>
-      bad {props.bad}<br/>
-      all {props.good + props.neutral + props.bad}
+      <table>
+        <tbody>
+          <StatisticLine text="good" value={props.good} />
+          <StatisticLine text="neutral" value={props.neutral} />
+          <StatisticLine text="bad" value={props.bad} />
+          <StatisticLine text="all" value={props.good + props.neutral + props.bad} />
+          <StatisticLine text="average" value={average} />
+          <StatisticLine text="positive" value={positive} />
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -45,7 +73,7 @@ const App = () => {
         text="bad"
       />
       <h1>statistics</h1>
-      <Display
+      <Statistics
         good={good}
         neutral={neutral}
         bad={bad}
