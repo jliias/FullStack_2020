@@ -13,15 +13,20 @@ const App = (props) => {
   const [allVotes, setAllVotes] = useState(Array(anecdotes.length).fill(0))
 
   // Helper function to randomly select next number
-  const nextAnecdote = () => setSelected(Math.floor(Math.random() * Math.floor(anecdotes.length)))
+  const nextAnecdote = () => {
+    setSelected(Math.floor(Math.random() * Math.floor(anecdotes.length)))
+  }
 
   // Helper function to make vote and check what is most voted anecdote
   const makeVote = () => {
-    allVotes[selected] += 1
-    let largest = allVotes.indexOf(Math.max(...allVotes));
+    const copy = [...allVotes]
+    copy[selected] += 1
+    setAllVotes(copy)
+    let largest = copy.indexOf(Math.max(...copy));
     setMostVoted(largest)
   }
 
+  // To help debugging
   console.log("allVotes:", allVotes)
   console.log("mostVoted: ", mostVoted)
 
