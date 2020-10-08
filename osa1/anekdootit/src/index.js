@@ -1,51 +1,29 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-function getArrayMax(array){
-  return Math.max.apply(null, array);
-}
-
 const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>
     {text}
   </button>
 )
 
-const MostVoted = (allVotes) => {
-  console.log(allVotes)
-  // const mostVoted = Math.max.apply(null, allVotes)
-  // let largest = 0;
-
-  // for (var i = 0; i <= allVotes.length; i++) {
-  //   if (allVotes[i] > largest) {
-  //     console.log("i: ", i)
-  //     largest = allVotes[i];
-  //   }
-  // }
-
-  const largest = getArrayMax(allVotes)
-  console.log("largest: ", largest)
-  return (
-    <div>
-      ahaa
-      {/* {anecdotes[Math.max(...allVotes)]} */}
-    </div>
-  );
-}
-
 const App = (props) => {
   const [selected, setSelected] = useState(0)
-  //const allVotes = new Array(anecdotes.length).fill(0)
-  const [allVotes, setAll] = useState(Array(anecdotes.length).fill(0))
+  const [mostVoted, setMostVoted] = useState(0)
+  const [allVotes, setAllVotes] = useState(Array(anecdotes.length).fill(0))
+
+  // Helper function to randomly select next number
   const nextAnecdote = () => setSelected(Math.floor(Math.random() * Math.floor(anecdotes.length)))
 
+  // Helper function to make vote and check what is most voted anecdote
   const makeVote = () => {
     allVotes[selected] += 1
-    console.log(allVotes);
+    let largest = allVotes.indexOf(Math.max(...allVotes));
+    setMostVoted(largest)
   }
 
-  console.log(selected);
-
+  console.log("allVotes:", allVotes)
+  console.log("mostVoted: ", mostVoted)
 
   return (
     <div>
@@ -61,7 +39,9 @@ const App = (props) => {
         handleClick={nextAnecdote}
       />
       <h1>Anecdote with most votes</h1>
-      <MostVoted allVotes={allVotes} />
+      {props.anecdotes[mostVoted]}
+      <br/>
+      has {allVotes[mostVoted]} votes
     </div>
   )
 }
