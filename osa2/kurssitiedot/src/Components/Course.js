@@ -7,12 +7,12 @@ const Header = ({ course }) => {
 }
 
 const Total = ({ course }) => {
-    let sum = 0
-    for (var i = 0; i < course.parts.length; i++) {
-        sum += course.parts[i].exercises
-    }
+    const total = course.parts.reduce(
+        (previous, current) => previous + current.exercises, 0);
+    console.log('total: ', total);
+
     return (
-        <p><b>Total of {sum} excercises</b></p>
+        <p><b>Total of {total} excercises</b></p>
     )
 }
 
