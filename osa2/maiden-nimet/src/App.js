@@ -4,6 +4,11 @@ import axios from 'axios'
 import Countries from './Components/Countries';
 import SearchForm from './Components/SearchForm';
 import CountryData from './Components/CountryData';
+import WeatherData from './Components/WeatherData';
+
+const api_key = process.env.REACT_APP_API_KEY
+
+console.log(api_key);
 
 const App = () => {
   const [countries, setCountries] = useState([])
@@ -58,6 +63,7 @@ const App = () => {
         <div>
           <h2><Countries showCountries={showCountries} showButton={false}/></h2>
           <CountryData country={showCountries[0]} />
+          <WeatherData city={showCountries[0].capital} api_key={api_key}/>
         </div>
       }
       {numberOfCountries === 0 &&
