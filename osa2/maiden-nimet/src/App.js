@@ -22,30 +22,42 @@ const App = () => {
       })
   }, [])
 
-  const numberOfCountries = showCountries.length;
+  const FilterCountries = (filter) => {
+    console.log("FILTER: ", filter);
+    console.log(filter.toLowerCase())
+    let tmpList = []
+    countries.forEach(function (item, index, array) {
+      if (item.name.toLowerCase().includes(filter.toLowerCase())) {
+        console.log(item.name.toLowerCase());
 
+        tmpList.push(item);
+      }
+    })
+    setShowCountries(tmpList);
+  }
+
+  const numberOfCountries = showCountries.length;
 
   return (
     <div>
       <SearchForm
         newFilter={newFilter}
         setNewFilter={setNewFilter}
-        countries={countries}
-        setShowCountries={setShowCountries}
+        FilterCountries={FilterCountries}
       />
 
       {numberOfCountries > 10 &&
         <div> Too many matches, specify another filter</div>
       }
       {numberOfCountries <= 10 && numberOfCountries > 1 &&
-        <Countries showCountries={showCountries} />
+        <div>
+          <Countries showCountries={showCountries} FilterCountries={FilterCountries} showButton={true}/>
+        </div>
       }
       {numberOfCountries === 1 &&
         <div>
-          <h2><Countries showCountries={showCountries} /></h2>
-
+          <h2><Countries showCountries={showCountries} showButton={false}/></h2>
           <CountryData country={showCountries[0]} />
-
         </div>
       }
       {numberOfCountries === 0 &&

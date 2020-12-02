@@ -11,6 +11,10 @@ const Language = ({ language }) => {
 
 const CountryData = ({ country }) => {
 
+    // Need to check if data is valid, otherwise in first
+    // render there will be problems with languages.map
+    const dataValid = country ? true : false;
+
     return (
         <div>
             capital {country.capital}
@@ -18,9 +22,9 @@ const CountryData = ({ country }) => {
             population {country.population}
             <h3>languages</h3>
             <ul>
-            {country.languages.map(language =>
-                <Language language={language} />
-            )}
+                {dataValid && country.languages.map((language, index) =>
+                    <Language language={language} key={index} />
+                )}
             </ul>
             <img className="flag" src={country.flag} alt="" />
         </div>
